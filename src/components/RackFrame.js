@@ -18,7 +18,11 @@ export class RackFrame {
     this.rackCount = rackCount;
 
     const thickness = 0.15;
-    const frameMaterial = new THREE.MeshToonMaterial({ color: 0xf1f1f1 });
+    const frameMaterial = new THREE.MeshToonMaterial({ 
+      color: 0xf1f1f1,
+      depthTest: true,
+      depthWrite: true
+    });
 
     // === Pilares verticais ===
     const h = height / 1.2;
@@ -80,16 +84,21 @@ export class RackFrame {
       knappCtx.font = "bold 70px Arial";
       knappCtx.textAlign = "center";
       knappCtx.textBaseline = "top";
-      knappCtx.fillText("K12", knappCanvas.width / 2, 30);
+      knappCtx.fillText("K12", knappCanvas.width / 2, 5);
 
       const knappTexture = new THREE.CanvasTexture(knappCanvas);
-      const knappMaterial = new THREE.MeshToonMaterial({ map: knappTexture });
+      const knappMaterial = new THREE.MeshToonMaterial({ 
+        map: knappTexture,
+        depthTest: true,
+        depthWrite: true
+      });
       const knappPlate = new THREE.Mesh(
         new THREE.BoxGeometry(1.4, 1.4, 0.1),
         knappMaterial
       );
 
-      knappPlate.position.set(-width / 1.8 - 1.5, height + 0.5, depth / 2 + 0.5);
+      knappPlate.position.set(-width / 2 - 1.5, height + 0.9, depth / 2 + 0.5);
+      knappPlate.renderOrder = 1; // Renderizar por cima
       this.group.add(knappPlate);
     }
 
@@ -108,7 +117,11 @@ export class RackFrame {
       ctx.fillText(label.toString(), 128, 64);
 
       const texture = new THREE.CanvasTexture(canvas);
-      const textMaterial = new THREE.MeshToonMaterial({ map: texture });
+      const textMaterial = new THREE.MeshToonMaterial({ 
+        map: texture,
+        depthTest: true,
+        depthWrite: true
+      });
       const textPlane = new THREE.Mesh(
         new THREE.BoxGeometry(1.4, 0.7, thickness),
         textMaterial
@@ -133,6 +146,7 @@ export class RackFrame {
       }
 
       textPlane.position.set(xPos, height + 0.6, zPos);
+      textPlane.renderOrder = 1; // Renderizar por cima
       this.group.add(textPlane);
     }
 

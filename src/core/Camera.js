@@ -6,7 +6,9 @@ export class Camera {
     const d = 20;
     
     this.camera = new THREE.OrthographicCamera(
-      -d * aspect, d * aspect, d, -d, 1, 1000
+      -d * aspect, d * aspect, d, -d, 
+      0.1, // near plane - mais próximo para evitar clipping
+      2000 // far plane - aumentado para cobrir toda a cena
     );
     this.camera.position.set(20, 20, 20);
     this.camera.lookAt(0, 0, 0);
