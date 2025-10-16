@@ -11,9 +11,6 @@ import { PalletStructure, palletPositions } from "./PalletStructure.js";
 import * as THREE from "three";
 
 export class DistributionCenter {
-  //  showWorkerCards() {
-  //   createCardWorkerUI();
-  // }
 
   constructor() {
     this.scene = new Scene();
