@@ -32,8 +32,16 @@ export class PalletStructure {
     const depth = 3;
 
     // 🔹 Estrutura metálica (azul)
-    const structureMat = new THREE.MeshToonMaterial({ color: 0x0047ab }); // azul metálico
-    const barMat = new THREE.MeshToonMaterial({ color: 0xff8c00 }); // laranja vibrante
+    const structureMat = new THREE.MeshToonMaterial({ 
+      color: 0x0047ab,
+      depthTest: true,
+      depthWrite: true
+    });
+    const barMat = new THREE.MeshToonMaterial({ 
+      color: 0xff8c00,
+      depthTest: true,
+      depthWrite: true
+    });
 
     const postGeometry = new THREE.BoxGeometry(0.2, totalHeight + 1, 0.2);
     const horizontalGeometry = new THREE.BoxGeometry(
@@ -52,19 +60,22 @@ export class PalletStructure {
     postPositions.forEach(([x, y, z]) => {
       const post = new THREE.Mesh(postGeometry, structureMat);
       post.position.set(x, y, z);
+      post.renderOrder = 0; // Estrutura base
       this.group.add(post);
     });
 
-    // Vigas horizontais azuis a cada nível
+    // Vigas horizontais laranja a cada nível
     for (let level = 1; level <= 5; level++) {
       const yOffset = level * levelHeight;
 
       const frontBar = new THREE.Mesh(horizontalGeometry, barMat);
       frontBar.position.set(totalWidth / 2, yOffset, depth / 2);
+      frontBar.renderOrder = 0; // Estrutura base
       this.group.add(frontBar);
 
       const backBar = new THREE.Mesh(horizontalGeometry, barMat);
       backBar.position.set(totalWidth / 2, yOffset, -depth / 2);
+      backBar.renderOrder = 0; // Estrutura base
       this.group.add(backBar);
     }
 

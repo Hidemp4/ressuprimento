@@ -17,6 +17,7 @@ export class DistributionCenter {
     this.camera = new Camera(window.innerWidth, window.innerHeight);
     this.renderer = new Renderer();
     this.controls = null;
+    this.stations = []; // Armazena referências das estações
   }
 
   init() {
@@ -60,13 +61,23 @@ export class DistributionCenter {
       this.scene.add(palletStructure.getMesh());
     });
 
-    // Adicionar Estações (esteira + flow racks)
-    const station = new Station(new THREE.Vector3(-8, 20, 2));
-    scene.add(station.getMesh());
+    // ======== ADICIONAR ESTAÇÕES (Escalável de 1 a 8) ========
+    const numberOfStations = 8;
+    const stationSpacing = 20; // Espaçamento entre estações (lado a lado no eixo X)
+    
+    for (let i = numberOfStations; i >= 1; i--) {
+      // Posição baseada no índice da estação (lado a lado no eixo X)
+      // Invertido: estação 8 fica à esquerda, estação 1 fica à direita
+      const xPosition = (numberOfStations - i) * stationSpacing - (numberOfStations - 1) * stationSpacing / 2;
+      const station = new Station(
+        new THREE.Vector3(xPosition + 60, 20, 0),
+        i // Número da estação
+      );
+      scene.add(station.getMesh());
+      this.stations.push(station);
 
-    // Adicionar trabalhadores
-    for (let i = 0; i < 1; i++) {
-      const worker = new Worker(new THREE.Vector3(-7, 20, 2 + i * 2));
+      // Adicionar trabalhador para cada estação
+      const worker = new Worker(new THREE.Vector3(xPosition + 60, 20, 0));
       scene.add(worker.getMesh());
     }
   }
@@ -90,5 +101,18 @@ export class DistributionCenter {
   animate() {
     requestAnimationFrame(() => this.animate());
     this.renderer.render(this.scene.getScene(), this.camera.getCamera());
+  }
+
+  // Método auxiliar para adicionar uma estação dinamicamente
+  addStation(stationNumber, position) {
+    const station = new Station(position, stationNumber);
+    this.scene.getScene().add(station.getMesh());
+    this.stations.push(station);
+    return station;
+  }
+
+  // Método auxiliar para obter todas as estações
+  getStations() {
+    return this.stations;
   }
 }

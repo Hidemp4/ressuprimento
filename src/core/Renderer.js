@@ -2,10 +2,18 @@ import * as THREE from 'three';
 
 export class Renderer {
   constructor() {
-    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer = new THREE.WebGLRenderer({ 
+      antialias: true,
+      logarithmicDepthBuffer: true // Melhora precisão do depth buffer
+    });
     this.renderer.setClearColor(0xe0e0e0);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setPixelRatio(window.devicePixelRatio);
+    
+    // Habilitar ordenação de objetos e depth testing
+    this.renderer.sortObjects = true;
+    this.renderer.shadowMap.enabled = false; // Desabilitar se não usar sombras
+    
     document.body.appendChild(this.renderer.domElement);
   }
 
