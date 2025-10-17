@@ -60,7 +60,7 @@ export class DistributionCenter {
     // ======== GERENCIADOR DE BRAÇOS ========
     this.armManager = new ArmManager(scene);
 
-    // ======== ADICIONAR BRAÇOS (EXEMPLO) ========
+    // ======== ADICIONAR BRAÇOS ========
     
     // Braço K12 - Alto Giro (8 estações) - Normal
     this.armManager.addArm(
@@ -71,8 +71,6 @@ export class DistributionCenter {
       0 // Sem rotação
     );
 
-    // Você pode adicionar mais braços facilmente:
-    
     // Braço K13 - Alto Giro (8 estações) - INVERTIDO 180°
     this.armManager.addArm(
       "K13",
@@ -81,15 +79,6 @@ export class DistributionCenter {
       new THREE.Vector3(85, 0, 0),
       Math.PI // 180 graus (racks invertidos)
     );
-
-    // Braço K14 - Rotacionado 90°
-    // this.armManager.addArm(
-    //   "K14",
-    //   ["17", "18", "19", "20", "21", "22", "23", "24"],
-    //   ArmType.HIGH_ROTATION,
-    //   new THREE.Vector3(-60, 20, 0),
-    //   Math.PI / 2 // 90 graus
-    // );
 
     // Listar informações dos braços no console
     this.armManager.listArms();

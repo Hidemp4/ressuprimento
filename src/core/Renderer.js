@@ -12,7 +12,7 @@ export class Renderer {
     
     // Habilitar ordenação de objetos e depth testing
     this.renderer.sortObjects = true;
-    this.renderer.shadowMap.enabled = false; // Desabilitar se não usar sombras
+    this.renderer.shadowMap.enabled = true; // Desabilitar se não usar sombras
     
     document.body.appendChild(this.renderer.domElement);
   }
