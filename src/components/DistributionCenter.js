@@ -6,12 +6,11 @@ import { CameraControls } from "../controls/CameraControls.js";
 import { Floor } from "./Floor.js";
 import { Station } from "./Station.js";
 import { Worker } from "./Worker.js";
-import { createCardWorkerUI } from './CardWorker.js';
+import { createCardWorkerUI } from "./CardWorker.js";
 import { PalletStructure, palletPositions } from "./PalletStructure.js";
 import * as THREE from "three";
 
 export class DistributionCenter {
-
   constructor() {
     this.scene = new Scene();
     this.camera = new Camera(window.innerWidth, window.innerHeight);
@@ -64,11 +63,13 @@ export class DistributionCenter {
     // ======== ADICIONAR ESTAÇÕES (Escalável de 1 a 8) ========
     const numberOfStations = 8;
     const stationSpacing = 20; // Espaçamento entre estações (lado a lado no eixo X)
-    
+
     for (let i = numberOfStations; i >= 1; i--) {
       // Posição baseada no índice da estação (lado a lado no eixo X)
       // Invertido: estação 8 fica à esquerda, estação 1 fica à direita
-      const xPosition = (numberOfStations - i) * stationSpacing - (numberOfStations - 1) * stationSpacing / 2;
+      const xPosition =
+        (numberOfStations - i) * stationSpacing -
+        ((numberOfStations - 1) * stationSpacing) / 2;
       const station = new Station(
         new THREE.Vector3(xPosition + 60, 20, 0),
         i // Número da estação
@@ -79,6 +80,13 @@ export class DistributionCenter {
       // Adicionar trabalhador para cada estação
       const worker = new Worker(new THREE.Vector3(xPosition + 60, 20, 0));
       scene.add(worker.getMesh());
+
+      // No loop de animação (opcional, mas recomendado)
+      function animate() {
+        requestAnimationFrame(animate);
+        worker.update(); // Atualiza animação de membros
+        renderer.render(scene, camera);
+      }
     }
   }
 
