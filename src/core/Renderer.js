@@ -10,7 +10,7 @@ export class Renderer {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     
-    // Habilitar ordenação de objetos e depth testing
+    // Habilita ordenação de objetos e depth testing
     this.renderer.sortObjects = true;
     this.renderer.shadowMap.enabled = true; // Desabilitar se não usar sombras
     

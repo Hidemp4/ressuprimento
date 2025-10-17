@@ -39,7 +39,7 @@ export class Light {
     const topLight = new THREE.SpotLight(0xffffff, 0.3, 100, Math.PI / 4, 0.5, 1);
     topLight.position.set(0, 40, 0);
     topLight.target.position.set(0, 0, 0);
-    topLight.castShadow = false; // Geralmente só a luz principal projeta sombra
+    topLight.castShadow = false; // luz principal projeta sombra
     scene.add(topLight);
     scene.add(topLight.target);
 
