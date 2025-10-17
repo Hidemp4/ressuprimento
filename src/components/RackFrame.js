@@ -70,7 +70,7 @@ export class RackFrame {
     topRight.position.set(width / 2 + 1.5, h, 0);
     this.group.add(topRight);
 
-    // === PLACA COM "K12" (apenas se showKnapp for true) ===
+    // === PLACA: NÚMERO K (apenas se showKnapp for true) ===
     if (showKnapp) {
       const knappCanvas = document.createElement("canvas");
       knappCanvas.width = 256;
@@ -81,10 +81,10 @@ export class RackFrame {
       knappCtx.fillRect(0, 0, knappCanvas.width, knappCanvas.height);
 
       knappCtx.fillStyle = "#bf930d";
-      knappCtx.font = "bold 70px Arial";
+      knappCtx.font = "bold 50px Arial";
       knappCtx.textAlign = "center";
       knappCtx.textBaseline = "top";
-      knappCtx.fillText("K12", knappCanvas.width / 2, 5);
+      knappCtx.fillText("KNAPP", knappCanvas.width / 2, 5);
 
       const knappTexture = new THREE.CanvasTexture(knappCanvas);
       const knappMaterial = new THREE.MeshToonMaterial({ 
@@ -97,12 +97,12 @@ export class RackFrame {
         knappMaterial
       );
 
-      knappPlate.position.set(-width / 2 - 1.5, height + 0.9, depth / 2 + 0.5);
+      knappPlate.position.set(-width / 2 - 1.3, height + 0.6, depth / 2 + 0.5);
       knappPlate.renderOrder = 1; // Renderizar por cima
       this.group.add(knappPlate);
     }
 
-    // === PLACA DO NÚMERO (label) ===
+    // === PLACA: NÚMERO DA ESTAÇÃO ===
     if (label !== null) {
       const canvas = document.createElement("canvas");
       canvas.width = 256;
@@ -127,11 +127,11 @@ export class RackFrame {
         textMaterial
       );
 
-      // Posicionar a placa baseado no labelPosition
+      // Posicionar a placa no labelPosition
       let xPos, zPos;
       switch (labelPosition) {
         case "back-left":
-          xPos = -width / 1.5 - 1.3;
+          xPos = -width / 1.64 ;
           zPos = -depth / 4 + 5.5;
           break;
         case "back-right":
@@ -140,8 +140,8 @@ export class RackFrame {
           break;
         case "front-left":
         default:
-          xPos = -width / 2 - 1.5;
-          zPos = depth / 2 + 0.5;
+          xPos = -width / 1.5;
+          zPos = depth / 1.34;
           break;
       }
 

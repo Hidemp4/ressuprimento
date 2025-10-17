@@ -14,7 +14,7 @@ export class WorkerMovement {
   async startAutoCycle() {
     while (true) {
       const randomX = this.homePosition.x + THREE.MathUtils.randFloat(-5, 5);
-      const randomY = THREE.MathUtils.randFloat(20, 21);
+      const randomY = THREE.MathUtils.randFloat(0, 1);
       const randomZ = THREE.MathUtils.randFloat(0, 0.5);
       const newTarget = new THREE.Vector3(randomX, randomY, randomZ);
 
