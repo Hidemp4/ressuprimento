@@ -1,14 +1,14 @@
-// WorkerMovement.js
 import * as THREE from 'three';
 
 export class WorkerMovement {
-  constructor(group, homePosition, speed = 0.03) {
+  constructor(group, homePosition, onWorkCompleteCallback = null, speed = 0.03) {
     this.group = group;
     this.homePosition = homePosition.clone();
     this.speed = speed;
     this.target = null;
     this.isMoving = false;
     this._moveStartTime = 0;
+    this.onWorkComplete = onWorkCompleteCallback;
   }
 
   async startAutoCycle() {
@@ -21,6 +21,12 @@ export class WorkerMovement {
       await this.moveToAsync(newTarget);
       await this.wait(300);
       await this.moveToAsync(this.homePosition);
+      
+      // Trigger efeito de trabalho completo quando volta para home
+      if (this.onWorkComplete) {
+        this.onWorkComplete();
+      }
+      
       await this.wait(500);
     }
   }

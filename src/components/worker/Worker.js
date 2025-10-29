@@ -1,8 +1,8 @@
-// Worker.js
 import * as THREE from 'three';
 import { WorkerAppearance } from './WorkerAppearance.js';
 import { WorkerLimbs } from './WorkerLimbs.js';
 import { WorkerMovement } from './WorkerMovement.js';
+import { WorkerEffects } from './WorkerEffects.js';
 
 export class Worker {
   constructor(position) {
@@ -28,11 +28,19 @@ export class Worker {
     // Posicionar trabalhador
     this.group.position.copy(position);
 
-    // Configurar movimento
-    this.movement = new WorkerMovement(this.group, position);
+    // Criar sistema de efeitos visuais
+    this.effects = new WorkerEffects(this.group);
+
+    // Configurar movimento com callback de conclusão
+    this.movement = new WorkerMovement(this.group, position, this.onWorkComplete.bind(this));
     
     // Iniciar ciclo de movimento automático
     this.movement.startAutoCycle();
+  }
+
+  onWorkComplete() {
+    // Callback chamado quando o worker volta para home position
+    this.effects.playWorkCompleteEffect();
   }
 
   update() {
@@ -53,5 +61,11 @@ export class Worker {
 
   getMesh() {
     return this.group;
+  }
+
+  dispose() {
+    if (this.effects) {
+      this.effects.dispose();
+    }
   }
 }
